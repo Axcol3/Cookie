@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: green;
+        }
+        #error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Enter Values to Set Cookies</h1>
+    <p>Please enter 10 unique values. Each value will be stored as a cookie with the same name.</p>
+    <p>Example of Cookie: password=300tractor</p>
+    <p> <b>password</b> is the name of the cookie and <b>300tractor</b> is the value of the cookie  </p>
+    <input type="text" id="cookieValue" placeholder="Enter a value" />
+    <button onclick="setCookie()">Set Cookie</button>
+    
+    <p>Values set: <span id="counter">0</span>/10</p>
+    
+    <div id="message"></div>
+    <div id="error"></div>
+
+    <script>
+        let values = [];
+        let cookieCount = 0;
+
+        function setCookie() {
+            const input = document.getElementById('cookieValue').value.trim();
+
+            if (input === "") {
+                document.getElementById('error').textContent = "Value cannot be empty!";
+                return;
+            }
+
+            // Check if the value already exists
+            if (values.includes(input)) {
+                document.getElementById('error').textContent = "This value has already been used!";
+                return;
+            }
+
+            // Store the value in an array and set a cookie
+            values.push(input);
+            document.cookie = "uniqueCookie=" + encodeURIComponent(input) + "; path=/";
+
+            // Update the counter
+            cookieCount++;
+            document.getElementById('counter').textContent = cookieCount;
+
+            // Check if all 10 unique values are entered
+            if (cookieCount >= 10) {
+                document.getElementById('message').textContent = "second part of flag: ng-$@nta_t0_G1ve";
+                document.getElementById('error').textContent = "";
+            }
+
+            // Clear the input field and error message
+            document.getElementById('cookieValue').value = "";
+            document.getElementById('error').textContent = "";
+        }
+    </script>
+</body>
+</html>
